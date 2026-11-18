@@ -8,6 +8,7 @@ services:
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-taskflow123}
     volumes:
       - postgres_data:/var/lib/postgresql/data
+      - ./backend/db/init.sql:/docker-entrypoint-initdb.d/init.sql:ro
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U taskflow_user -d taskflow"]
       interval: 10s
@@ -23,7 +24,7 @@ services:
       retries: 5
 
   backend:
-    image: khushi1115/taskflow-backend:latest
+    image: ${DOCKERHUB_USERNAME}/taskflow-backend:latest
     ports:
       - "3000:3000"
     environment:
@@ -38,7 +39,7 @@ services:
         condition: service_healthy
 
   frontend:
-    image: khushi1115/taskflow-frontend:latest
+    image: ${DOCKERHUB_USERNAME}/taskflow-frontend:latest
     ports:
       - "8080:80"
     depends_on:
