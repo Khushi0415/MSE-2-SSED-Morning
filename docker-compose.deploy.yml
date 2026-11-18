@@ -23,7 +23,7 @@ services:
       retries: 5
 
   backend:
-    image: khushi1115/backend:latest
+    image: khushi1115/taskflow-backend:latest
     ports:
       - "3000:3000"
     environment:
@@ -38,7 +38,7 @@ services:
         condition: service_healthy
 
   frontend:
-    image: khushi1115/frontend:latest
+    image: khushi1115/taskflow-frontend:latest
     ports:
       - "8080:80"
     depends_on:
